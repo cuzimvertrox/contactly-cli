@@ -40,9 +40,9 @@ Contactly CLI ist ein unkompliziertes Kommandozeilentool zum Verwalten von Konta
 Bevor Sie die Anwendung verwenden, stellen Sie sicher, dass Sie den Speicherort Ihrer Kontaktdateien in der Konfigurationsdatei festgelegt haben. Standardmäßig werden Kontaktdateien im "Contacts"-Verzeichnis im Dokumentenordner gespeichert. Sie können diesen Pfad in der Datei "contactly-cli.config" ändern.
 
 ## 6. Mitwirkende
-- [Bejanmain Kollmer](https://github.com/cuzimvertrox)
-- [Tobias Springborn](https://github.com/contributor-1)
-- [Samuel Hekler](https://github.com/contributor-2)
+- [Benjamin Kollmer](https://github.com/cuzimvertrox)
+- [Tobias Springborn](https://github.com/Hummelholz)
+- [Samuel Hekler](https://github.com/notFound)
 
 ## 7. Lizenz
 Dieses Projekt ist unter der MIT-Lizenz lizenziert. Weitere Details finden Sie in der [LICENSE](LICENSE)-Datei.

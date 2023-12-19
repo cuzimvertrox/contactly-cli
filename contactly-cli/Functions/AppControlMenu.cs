@@ -27,10 +27,23 @@ namespace contactly_cli.Functions
             // Cursor ausblenden
             Console.CursorVisible = false;
 
+            RenderMenu(options);
+
             while (true)
             {
-                RenderMenu(options);
-                HandleMenuInput(options);
+                ConsoleKeyInfo keyPress = Console.ReadKey(true);
+
+                // Überprüfen, ob der gedrückte Schlüssel einer der Menüoptionen entspricht
+                var matchedOption = options.FirstOrDefault(option => option.Key == keyPress.Key);
+
+                if (matchedOption != null)
+                {
+                    Console.Clear();
+                    matchedOption.Action();
+
+                    // Menü neu rendern nach Ausführung einer Aktion
+                    RenderMenu(options);
+                }
             }
         }
 

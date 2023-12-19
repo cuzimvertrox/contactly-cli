@@ -21,6 +21,7 @@ namespace contactly_cli.UI
         public static void ShowAddressBookScreen()
         {
             Console.Clear();
+            Console.WriteLine("");
             PrintLines(addressBookLogoLines);
             DisplayContacts();
             ShowMenu();
@@ -34,25 +35,33 @@ namespace contactly_cli.UI
             }
         }
 
+        private const int ContactsPerPage = 12;
+        private static int currentPage = 1;
+
+
         private static void DisplayContacts()
         {
             var contacts = VCFController.ReadContacts();
+            int totalContacts = contacts.Count;
+            int totalPages = (int)Math.Ceiling(totalContacts / (double)ContactsPerPage);
 
-            if (contacts.Count == 0)
+            if (totalContacts == 0)
             {
                 Console.WriteLine("   Keine Kontakte im Ordner gefunden. Erstellen Sie einen mit 'C'.");
                 return;
             }
 
-            Console.WriteLine("   Seite 1/X\n");
+            Console.WriteLine($"   Seite {currentPage}/{totalPages}\n");
             Console.WriteLine("   Nummer\tFirma\t\tName\t\tVorname\t\tEmail");
-            Console.WriteLine("   ----------------------------------------------------------------");
+            Console.WriteLine(new string('-', Console.WindowWidth));
 
-            int number = 1;
-            foreach (var contact in contacts)
+            int start = (currentPage - 1) * ContactsPerPage;
+            int end = Math.Min(start + ContactsPerPage, totalContacts);
+
+            for (int i = start; i < end; i++)
             {
-                Console.WriteLine($"   {number}\t\t{contact.Company}\t\t{contact.LastName}\t\t{contact.FirstName}\t\t{contact.Email}");
-                number++;
+                var contact = contacts[i];
+                Console.WriteLine($"   {i + 1}\t\t{contact.Company}\t\t{contact.LastName}\t\t{contact.FirstName}\t\t{contact.Email}");
             }
         }
 
@@ -60,35 +69,46 @@ namespace contactly_cli.UI
         {
             List<MenuOption> addressBookMenuOptions = new List<MenuOption>
             {
-                new MenuOption(ConsoleKey.E, EditContactUI.ShowEditContactScreen, "Bearbeiten"),
+                new MenuOption(ConsoleKey.O, OpenContact, "Öffnen"),
                 new MenuOption(ConsoleKey.C, CreateContactUI.ShowCreateContactScreen, "Erstellen"),
-                new MenuOption(ConsoleKey.RightArrow, NextPage, "Weiter"),
-                new MenuOption(ConsoleKey.LeftArrow, PreviousPage, "Zurück"),
-                new MenuOption(ConsoleKey.D, CreateContact, "Löschen"),
+                new MenuOption(ConsoleKey.RightArrow, () => ChangePage(1), "Weiter"),
+                new MenuOption(ConsoleKey.LeftArrow, () => ChangePage(-1), "Zurück"),
                 new MenuOption(ConsoleKey.X, HomeUI.ShowHomeScreen, "Home")
             };
 
             AppControlMenu.ShowMenu(addressBookMenuOptions);
         }
 
-        private static void EditContact()
+        private static void ChangePage(int direction)
         {
-            // Logik für das Bearbeiten eines Kontakts implementieren
+            var contacts = VCFController.ReadContacts();
+            int totalPages = (int)Math.Ceiling(contacts.Count / (double)ContactsPerPage);
+
+            currentPage = Math.Max(1, Math.Min(currentPage + direction, totalPages));
+            ShowAddressBookScreen();
         }
 
-        private static void CreateContact()
+        private static void OpenContact()
         {
-            // Logik für das Erstellen eines neuen Kontakts implementieren
-        }
+            var contacts = VCFController.ReadContacts();
+            Console.Clear();
+            Console.WriteLine("");
+            PrintLines(addressBookLogoLines);
+            DisplayContacts();
+            Console.SetCursorPosition(0, Console.WindowHeight - 4);
+            Console.WriteLine("Bitte geben Sie die Nummer des zu öffnenden Kontakts ein:");
+            int number = AppInputController.ShowInputField<int>();
+            number--; // Umwandlung von 1-basierter zu 0-basierter Indexierung
 
-        private static void NextPage()
-        {
-            // Logik für die Anzeige der nächsten Seite implementieren
-        }
-
-        private static void PreviousPage()
-        {
-            // Logik für die Anzeige der vorherigen Seite implementieren
+            if (number >= 0 && number < contacts.Count)
+            {
+                OpenContactUI.ShowContactDetails(contacts[number]);
+            }
+            else
+            {
+                Console.WriteLine("Ungültige Nummer. Drücken Sie eine beliebige Taste, um zurückzukehren.");
+                Console.ReadKey();
+            }
         }
     }
 }

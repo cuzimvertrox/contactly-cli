@@ -57,6 +57,7 @@
     <Compile Include="UI\CreateContactUI.cs" />
     <Compile Include="UI\EditContactUI.cs" />
     <Compile Include="UI\HomeUI.cs" />
+    <Compile Include="UI\OpenContactUI.cs" />
     <Compile Include="UI\SettingsUI.cs" />
   </ItemGroup>
   <ItemGroup>

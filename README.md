@@ -22,3 +22,9 @@ Contactly CLI ist ein unkompliziertes Kommandozeilentool zum Verwalten von Konta
 
    ```bash
    git clone https://github.com/your-username/contactly-cli.git
+
+2. Stellen Sie sicher, dass .NET Core auf Ihrem Computer installiert ist.
+3. Navigieren Sie zum Hauptverzeichnis des Projekts und erstellen Sie die Anwendung:
+   ```bash
+   cd contactly-cli
+   dotnet build

@@ -18,6 +18,8 @@ Contactly CLI ist ein unkompliziertes Kommandozeilentool zum Verwalten von Konta
 
 ## 3. Installation
 
+Eine einfache Installation kann über diese [Anleitung](https://github.com/cuzimvertrox/contactly-cli/wiki/Setup-und-Installation-des-Projektes-in-VS) erfolgen
+
 1. Klonen Sie das Repository auf Ihren Computer:
 
    ```bash

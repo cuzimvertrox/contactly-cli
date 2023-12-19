@@ -2,23 +2,23 @@
   <img src="Logo_Contactly.png" alt="Contactly Logo" width="25%">
 </p>
 
-# Contactly CLI - Einfache Kontaktverwaltung über die Befehlszeile
+# Contactly CLI - Einfaches Kontaktdatenmanagement per Kommandozeile
 
-## 1. Überblick
+## 1. Übersicht
 
-Contactly CLI ist ein einfaches Tool zur Verwaltung von Kontakten über die Befehlszeile. Mit diesem Programm können Sie Kontaktinformationen speichern, bearbeiten und löschen, ohne eine komplizierte Anwendung verwenden zu müssen.
+Contactly CLI ist ein unkompliziertes Kommandozeilentool zum Verwalten von Kontakten. Mit diesem Programm können Sie Kontaktdaten speichern, bearbeiten und löschen, ohne auf eine komplizierte Anwendung angewiesen zu sein.
 
 ## 2. Funktionen
 
-- **Kontakte anzeigen:** Sehen Sie sich Ihre gespeicherten Kontakte in einer übersichtlichen Liste an.
-- **Kontakte erstellen:** Fügen Sie neue Kontakte hinzu, indem Sie Vorname, Nachname, Firma, E-Mail, Telefonnummer, Adresse und Geburtstag eingeben.
-- **Kontakte bearbeiten:** Aktualisieren Sie die Informationen eines Kontakts, wenn sich etwas ändert.
-- **Kontakte löschen:** Löschen Sie Kontakte, die Sie nicht mehr benötigen.
-- **Konfiguration:** Konfigurieren Sie den Speicherort Ihrer Kontaktdateien.
+- **Kontakte anzeigen:** Ihre gespeicherten Kontakte in einer übersichtlichen Liste anzeigen.
+- **Kontakte erstellen:** Neue Kontakte hinzufügen, indem Sie Vorname, Nachname, Firma, E-Mail, Telefonnummer, Adresse und Geburtstag eingeben.
+- **Kontakte bearbeiten:** Kontaktinformationen aktualisieren, wenn sich etwas ändert.
+- **Kontakte löschen:** Kontakte entfernen, die Sie nicht mehr benötigen.
+- **Konfiguration:** Den Speicherort Ihrer Kontaktdateien konfigurieren.
 
 ## 3. Installation
 
-1. Klone das Repository auf deinem Computer:
+1. Klonen Sie das Repository auf Ihren Computer:
 
    ```bash
-   git clone https://github.com/dein-benutzername/contactly-cli.git
+   git clone https://github.com/your-username/contactly-cli.git

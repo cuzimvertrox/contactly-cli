@@ -28,3 +28,21 @@ Contactly CLI ist ein unkompliziertes Kommandozeilentool zum Verwalten von Konta
    ```bash
    cd contactly-cli
    dotnet build
+
+## 4. Verwendung
+
+1. Führen Sie die Anwendung nach dem Erstellen aus:
+   ```bash
+   dotnet run
+2. Das Hauptmenü wird angezeigt und ermöglicht Ihnen die Verwendung der verschiedenen Funktionen von Contactly CLI.
+
+## 5. Konfiguration
+Bevor Sie die Anwendung verwenden, stellen Sie sicher, dass Sie den Speicherort Ihrer Kontaktdateien in der Konfigurationsdatei festgelegt haben. Standardmäßig werden Kontaktdateien im "Contacts"-Verzeichnis im Dokumentenordner gespeichert. Sie können diesen Pfad in der Datei "contactly-cli.config" ändern.
+
+## 6. Mitwirkende
+- [Bejanmain Kollmer](https://github.com/cuzimvertrox)
+- [Tobias Springborn](https://github.com/contributor-1)
+- [Samuel Hekler](https://github.com/contributor-2)
+
+## 7. Lizenz
+Dieses Projekt ist unter der MIT-Lizenz lizenziert. Weitere Details finden Sie in der [LICENSE](LICENSE)-Datei.

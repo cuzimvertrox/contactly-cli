@@ -80,6 +80,7 @@
     <Compile Include="Controller\AppInputMenuController.cs" />
     <Compile Include="Controller\ConfigController.cs" />
     <Compile Include="Controller\InputValidationController.cs" />
+    <Compile Include="Controller\PrintLinesController.cs" />
     <Compile Include="Controller\VCFController.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,15 +1,10 @@
-﻿/*  Projektname: contactly-cli
- *  Erstellt: 2023-12-14
- * 
- *  Autor(en): Benjamin Kollmer
- *  
- *  Beschreibung der Funktionen dieser Datei:
- *  - Die ContactlyMain-Klasse dient als Einstiegspunkt für die Anwendung.
- *  - Sie führt die initiale Konfigurationsprüfung durch und zeigt die Startbildschirmoberfläche an.
- */
-using contactly_cli.Functions;
+﻿using contactly_cli.Functions;
 using contactly_cli.UI;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace contactly_cli
 {
@@ -17,7 +12,7 @@ namespace contactly_cli
     {
         static void Main(string[] args)
         {
-            // Initiale Prüfung ob für den Start die Config vorhanden ist. 
+            // Initiale Prüfung ob für den System Start alles vorhanden ist. 
             ConfigController.CheckConfig();
 
             // Render HomeUI

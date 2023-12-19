@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*  Projektname: contactly-cli
+ *  Erstellt: 2023-12-16
+ * 
+ *  Autor(en): Benjamin Kollmer, Samuel Hekler
+ *  
+ *  Beschreibung der Funktionen dieser Datei:
+ *  - Bereitstellung einer Benutzeroberfläche zum Erstellen neuer Kontakte
+ *  - Validierung der Eingaben
+ *  - Speichern des neu erstellten Kontakts
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using contactly_cli.Functions;
@@ -7,7 +18,8 @@ namespace contactly_cli.UI
 {
     public class CreateContactUI
     {
-        private static readonly List<string> createContactLogo = new List<string> {
+        private static readonly List<string> createContactLogo = new List<string>
+        {
             "               _       _ _            ",
             "  ___ _ __ ___| |_ ___| | | ___ _ __  ",
             " / _ \\ '__/ __| __/ _ \\ | |/ _ \\ '_ \\ ",
@@ -16,50 +28,39 @@ namespace contactly_cli.UI
             ""
         };
 
-
-
+        // Diese Methode zeigt das Menü zum Erstellen eines neuen Kontakts an
         public static void ShowCreateContactScreen()
         {
             var contact = new Contact();
             RenderContactScreen(contact);
 
-            contact.FirstName = GetInputFromUser("Vorname ", ref contact);
-            contact.LastName = GetInputFromUser("Nachname ", ref contact);
-            contact.Company = GetInputFromUser("Firma ", ref contact);
-            contact.Email = GetInputFromUser("E-Mail (ex. name@mail.tld)", ref contact);
-            contact.Phone = GetInputFromUser("Telefon (ex. 072354628553)", ref contact);
+            contact.FirstName = GetInputFromUser("Vorname", ref contact);
+            contact.LastName = GetInputFromUser("Nachname", ref contact);
+            contact.Company = GetInputFromUser("Firma", ref contact);
+            contact.Email = GetInputFromUser("E-Mail", ref contact);
+            contact.Phone = GetInputFromUser("Telefon", ref contact);
             contact.Address = GetInputFromUser("Adresse ", ref contact);
-            contact.Birthday = GetInputFromUser("Geburtstag (ex. 16.03.2001)", ref contact);
+            contact.Birthday = GetInputFromUser("Geburtstag", ref contact);
 
             RenderContactScreen(contact);
-
 
             ShowSaveOrCancelMenu(contact);
         }
 
+        // Diese Methode zeigt den Bildschirm zur Bearbeitung des Kontakts an
         private static void RenderContactScreen(Contact contact)
         {
             Console.Clear();
-            PrintLines(createContactLogo);
-            Console.WriteLine("\tLege einen neuen Kontakt in contacly an:\n");
+            PrintLinesController.PrintLines(createContactLogo);
+            Console.WriteLine("\tLege einen neuen Kontakt in contactly an:\n");
             DisplayContactInfo(contact);
         }
 
-        private static void PrintLines(List<string> lines)
-        {
-            foreach (var line in lines)
-            {
-                Console.WriteLine(line);
-            }
-        }
-
-
+        // Diese Methode erfasst die Benutzereingabe für einen bestimmten Kontaktbereich und validiert sie
         private static string GetInputFromUser(string fieldName, ref Contact contact)
         {
             string input;
             bool isValidInput;
-
-
             Func<string, bool> validation = null;
 
             switch (fieldName)
@@ -83,7 +84,7 @@ namespace contactly_cli.UI
                 Console.SetCursorPosition(0, Console.WindowHeight - 1);
                 input = AppInputMenuController.ShowInputField<string>();
 
-                isValidInput = validation == null || validation(input);
+                isValidInput = !string.IsNullOrWhiteSpace(input) && (validation == null || validation(input));
                 if (!isValidInput)
                 {
                     Console.SetCursorPosition(0, Console.WindowHeight - 5);
@@ -95,7 +96,7 @@ namespace contactly_cli.UI
             return input;
         }
 
-
+        // Diese Methode zeigt die Kontaktinformationen auf dem Bildschirm an
         private static void DisplayContactInfo(Contact contact)
         {
             Console.WriteLine($"\tVorname: {contact.FirstName}");
@@ -107,6 +108,7 @@ namespace contactly_cli.UI
             Console.WriteLine($"\tGeburtstag: {contact.Birthday}\n");
         }
 
+        // Diese Methode zeigt das Menü zum Speichern oder Abbrechen des Erstellens eines Kontakts an
         private static void ShowSaveOrCancelMenu(Contact contact)
         {
             List<MenuOption> options = new List<MenuOption>
@@ -118,6 +120,7 @@ namespace contactly_cli.UI
             AppControlMenu.ShowMenu(options);
         }
 
+        // Diese Methode speichert den neu erstellten Kontakt
         private static void SaveContact(Contact contact)
         {
             List<MenuOption> options = new List<MenuOption>
@@ -129,15 +132,9 @@ namespace contactly_cli.UI
             VCFController.CreateContact(contact);
             Console.Clear();
             Console.WriteLine("\n");
-            PrintLines(createContactLogo);
+            PrintLinesController.PrintLines(createContactLogo);
             Console.WriteLine("\tKontakt gespeichert.");
             AppControlMenu.ShowMenu(options);
-
         }
-
     }
 }
-
-
-
-

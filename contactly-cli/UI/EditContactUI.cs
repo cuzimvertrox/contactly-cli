@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using contactly_cli.Functions;
-
-/*  Projektname: contacly-cli
- *  Erstellt: 2023-12-XX
+﻿/*  Projektname: contactly-cli
+ *  Erstellt: 2023-12-19
  * 
- *  Autor(en):
+ *  Autor(en): Benjamin Kollmer, Samuel Hekler, Tobias Springborn
  *  
  *  Beschreibung der Funktionen dieser Datei:
- *  -
- *  -
- *  -
+ *  - Bereitstellung einer Benutzeroberfläche zum Bearbeiten der Kontaktinformationen
+ *  - Validierung der Eingaben
+ *  - Speichern der aktualisierten Kontaktinformationen
  */
+
+using System;
+using System.Collections.Generic;
+using contactly_cli.Functions;
 
 namespace contactly_cli.UI
 {
@@ -27,10 +27,11 @@ namespace contactly_cli.UI
             ""
         };
 
+        // Diese Methode zeigt das Bearbeitungsmenü für einen Kontakt an
         public static void ShowEditContactScreen(Contact contact)
         {
             Console.Clear();
-            PrintLines(editContactLogo);
+            PrintLinesController.PrintLines(editContactLogo);
             Console.WriteLine("\n\tBearbeiten Sie die Kontaktinformationen:\n");
 
             contact.FirstName = GetInputFromUser("Vorname", ref contact, contact.FirstName);
@@ -45,14 +46,7 @@ namespace contactly_cli.UI
             ShowSaveOrCancelMenu(contact);
         }
 
-        private static void PrintLines(List<string> lines)
-        {
-            foreach (var line in lines)
-            {
-                Console.WriteLine(line);
-            }
-        }
-
+        // Diese Methode erfasst die Benutzereingabe für einen bestimmten Kontaktbereich und validiert sie
         private static string GetInputFromUser(string fieldName, ref Contact contact, string currentValue)
         {
             string input;
@@ -92,15 +86,16 @@ namespace contactly_cli.UI
             return string.IsNullOrWhiteSpace(input) ? currentValue : input;
         }
 
+        // Diese Methode zeigt die Kontaktinformationen auf dem Bildschirm an
         private static void RenderContactScreen(Contact contact)
         {
             Console.Clear();
-            PrintLines(editContactLogo);
+            PrintLinesController.PrintLines(editContactLogo);
             Console.WriteLine("\tBearbeiten Sie die Kontaktinformationen:\n");
             DisplayContactInfo(contact);
-
         }
 
+        // Diese Methode zeigt die Kontaktinformationen auf dem Bildschirm an
         private static void DisplayContactInfo(Contact contact)
         {
             Console.WriteLine($"\tVorname: {contact.FirstName}");
@@ -112,6 +107,7 @@ namespace contactly_cli.UI
             Console.WriteLine($"\tGeburtstag: {contact.Birthday}\n");
         }
 
+        // Diese Methode zeigt das Menü zum Speichern oder Abbrechen der Bearbeitung an
         private static void ShowSaveOrCancelMenu(Contact contact)
         {
             List<MenuOption> options = new List<MenuOption>
@@ -123,6 +119,7 @@ namespace contactly_cli.UI
             AppControlMenu.ShowMenu(options);
         }
 
+        // Diese Methode speichert die bearbeiteten Kontaktinformationen
         private static void SaveContact(Contact contact)
         {
             VCFController.UpdateContact(contact);

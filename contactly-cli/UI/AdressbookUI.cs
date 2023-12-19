@@ -1,6 +1,18 @@
-﻿using System;
+﻿/*  Projektname: contactly-cli
+ *  Erstellt: 2023-12-17
+ * 
+ *  Autor(en): Benjamin Kollmer, Samuel Hekler
+ *  
+ *  Beschreibung der Funktionen dieser Datei:
+ *  - Anzeige der Kontaktliste
+ *  - Anzeige von Kontakten in Seiten
+ *  - Öffnen von Kontakten zur Anzeige von Details
+ *  - Anzeige des Adressbuch-Hauptmenüs
+ *  - Blättern durch die Kontaktseiten
+ */
+
+using System;
 using System.Collections.Generic;
-using System.IO;
 using contactly_cli.Functions;
 
 namespace contactly_cli.UI
@@ -18,28 +30,34 @@ namespace contactly_cli.UI
             ""
         };
 
+        private const int ContactsPerPage = 12;
+        private static int currentPage = 1;
 
         public static void ShowAddressBookScreen()
         {
             Console.Clear();
             Console.WriteLine("");
-            PrintLines(addressBookLogoLines);
+            PrintLinesController.PrintLines(addressBookLogoLines);
             DisplayContacts();
             ShowMenu();
         }
 
-        private static void PrintLines(List<string> lines)
+        // Diese Methode zeigt das Adressbuch-Hauptmenü an
+        private static void ShowMenu()
         {
-            foreach (var line in lines)
+            List<MenuOption> addressBookMenuOptions = new List<MenuOption>
             {
-                Console.WriteLine(line);
-            }
+                new MenuOption(ConsoleKey.O, OpenContact, "Öffnen"),
+                new MenuOption(ConsoleKey.C, CreateContactUI.ShowCreateContactScreen, "Erstellen"),
+                new MenuOption(ConsoleKey.RightArrow, () => ChangePage(1), "Weiter"),
+                new MenuOption(ConsoleKey.LeftArrow, () => ChangePage(-1), "Zurück"),
+                new MenuOption(ConsoleKey.X, HomeUI.ShowHomeScreen, "Home")
+            };
+
+            AppControlMenu.ShowMenu(addressBookMenuOptions);
         }
 
-        private const int ContactsPerPage = 12;
-        private static int currentPage = 1;
-
-
+        // Diese Methode zeigt die Liste der Kontakte an
         private static void DisplayContacts()
         {
             var contacts = VCFController.ReadContacts();
@@ -66,34 +84,12 @@ namespace contactly_cli.UI
             }
         }
 
-        private static void ShowMenu()
-        {
-            List<MenuOption> addressBookMenuOptions = new List<MenuOption>
-            {
-                new MenuOption(ConsoleKey.O, OpenContact, "Öffnen"),
-                new MenuOption(ConsoleKey.C, CreateContactUI.ShowCreateContactScreen, "Erstellen"),
-                new MenuOption(ConsoleKey.RightArrow, () => ChangePage(1), "Weiter"),
-                new MenuOption(ConsoleKey.LeftArrow, () => ChangePage(-1), "Zurück"),
-                new MenuOption(ConsoleKey.X, HomeUI.ShowHomeScreen, "Home")
-            };
-
-            AppControlMenu.ShowMenu(addressBookMenuOptions);
-        }
-
-        private static void ChangePage(int direction)
-        {
-            var contacts = VCFController.ReadContacts();
-            int totalPages = (int)Math.Ceiling(contacts.Count / (double)ContactsPerPage);
-
-            currentPage = Math.Max(1, Math.Min(currentPage + direction, totalPages));
-            ShowAddressBookScreen();
-        }
-
+        // Diese Methode öffnet einen Kontakt zur Anzeige von Details
         private static void OpenContact()
         {
             var contacts = VCFController.ReadContacts();
             Console.Clear();
-            PrintLines(addressBookLogoLines);
+            PrintLinesController.PrintLines(addressBookLogoLines);
             DisplayContacts();
             Console.SetCursorPosition(0, Console.WindowHeight - 4);
             Console.WriteLine("Bitte geben Sie die Nummer des zu öffnenden Kontakts ein:");
@@ -107,11 +103,21 @@ namespace contactly_cli.UI
             else
             {
                 Console.Clear();
-                PrintLines(addressBookLogoLines);
+                PrintLinesController.PrintLines(addressBookLogoLines);
                 Console.WriteLine("Ungültige Nummer. Drücken Sie eine beliebige Taste, um zurückzukehren.");
                 Console.ReadKey();
                 ShowAddressBookScreen();
             }
+        }
+
+        // Diese Methode ermöglicht das Blättern durch die Kontaktseiten
+        private static void ChangePage(int direction)
+        {
+            var contacts = VCFController.ReadContacts();
+            int totalPages = (int)Math.Ceiling(contacts.Count / (double)ContactsPerPage);
+
+            currentPage = Math.Max(1, Math.Min(currentPage + direction, totalPages));
+            ShowAddressBookScreen();
         }
     }
 }

@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*  Projektname: contactly-cli
+ *  Erstellt: 2023-12-14
+ * 
+ *  Autor(en): Benjamin Kollmer
+ *  
+ *  Beschreibung der Funktionen dieser Datei:
+ *  - Überprüfung und Verwaltung der Konfigurationsdatei
+ *  - Erstellen, Schreiben und Lesen von Konfigurationswerten
+ *  - Überprüfung der Gültigkeit von Verzeichnispfaden
+ *  - Erstellung des Standardverzeichnispfads für Kontaktdateien
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,13 +50,13 @@ namespace contactly_cli.Functions
             }
         }
 
-        // Erstellt eine neue Konfigurationsdatei
+        // Diese Methode erstellt eine neue Konfigurationsdatei, falls sie nicht vorhanden ist
         private static void CreateConfigFile()
         {
             File.Create(ConfigFilePath).Dispose();
         }
 
-        // Schreibt einen Wert in die Konfigurationsdatei
+        // Diese Methode schreibt einen Wert in die Konfigurationsdatei
         public static void WriteConfig(string key, string value)
         {
             // Überprüfen, ob die Datei existiert. Wenn nicht, erstelle sie.
@@ -75,7 +87,7 @@ namespace contactly_cli.Functions
             File.WriteAllLines(ConfigFilePath, configContent.Select(kvp => $"{kvp.Key}={kvp.Value}"));
         }
 
-        // Liest einen Wert aus der Konfigurationsdatei
+        // Diese Methode liest einen Wert aus der Konfigurationsdatei
         public static string ReadConfig(string key)
         {
             if (File.Exists(ConfigFilePath))
@@ -92,13 +104,13 @@ namespace contactly_cli.Functions
             return "Not Found"; // Schlüssel nicht gefunden
         }
 
-        // Überprüft, ob ein Pfad gültig ist
+        // Diese Methode überprüft, ob ein Pfad gültig ist
         public static bool IsValidPath(string path)
         {
             return !string.IsNullOrEmpty(path) && Directory.Exists(path);
         }
 
-        // Erstellt den Standardpfad für die Konfigurationsdatei
+        // Diese Methode erstellt den Standardpfad für die Konfigurationsdatei
         private static string CreateDefaultPath()
         {
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*  Projektname: contactly-cli
+ *  Erstellt: 2023-12-16
+ * 
+ *  Autor(en): Samuel Hekler
+ *  
+ *  Beschreibung der Funktionen dieser Datei:
+ *  - Anzeigen der Details eines Kontakts
+ *  - Bereitstellen von Optionen zur Bearbeitung, Löschung und zum Versenden von E-Mails
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using contactly_cli.Functions;
@@ -17,30 +27,18 @@ namespace contactly_cli.UI
             ""
         };
 
+        // Methode zur Anzeige von Kontaktdetails
         public static void ShowContactDetails(Contact contact)
         {
             Console.Clear();
             Console.WriteLine("\n");
-            PrintLines(openContactLogo);
+            PrintLinesController.PrintLines(openContactLogo);
             Console.WriteLine($"\tKontaktdetails für {contact.FirstName} {contact.LastName}:\n");
-            Console.WriteLine($"\tName: {contact.LastName}");
-            Console.WriteLine($"\tVorname: {contact.FirstName}");
-            Console.WriteLine($"\tFirma: {contact.Company}");
-            Console.WriteLine($"\tE-Mail: {contact.Email}");
-            Console.WriteLine($"\tTelefon: {contact.Phone}");
-            Console.WriteLine($"\tAdresse: {contact.Address}");
-            Console.WriteLine($"\tGeburtstag: {contact.Birthday}\n");
+            DisplayContactInfo(contact);
             ShowOptions(contact);
         }
 
-        private static void PrintLines(List<string> lines)
-        {
-            foreach (var line in lines)
-            {
-                Console.WriteLine(line);
-            }
-        }
-
+        // Methode zur Anzeige der Menüoptionen
         private static void ShowOptions(Contact contact)
         {
             List<MenuOption> options = new List<MenuOption>
@@ -49,14 +47,23 @@ namespace contactly_cli.UI
                 new MenuOption(ConsoleKey.D, () => DeleteContactUI.ShowDeleteContactScreen(contact), "Kontakt löschen"),
                 new MenuOption(ConsoleKey.M, () => SendEmail(contact), "E-Mail an Kontakt"),
                 new MenuOption(ConsoleKey.X, HomeUI.ShowHomeScreen, "Zurück zum Hauptmenü")
-
-
             };
-
             AppControlMenu.ShowMenu(options);
-
         }
 
+        // Methode zur Anzeige der Kontaktinformationen
+        private static void DisplayContactInfo(Contact contact)
+        {
+            Console.WriteLine($"\tName: {contact.LastName}");
+            Console.WriteLine($"\tVorname: {contact.FirstName}");
+            Console.WriteLine($"\tFirma: {contact.Company}");
+            Console.WriteLine($"\tE-Mail: {contact.Email}");
+            Console.WriteLine($"\tTelefon: {contact.Phone}");
+            Console.WriteLine($"\tAdresse: {contact.Address}");
+            Console.WriteLine($"\tGeburtstag: {contact.Birthday}\n");
+        }
+
+        // Methode zum Senden einer E-Mail an den Kontakt
         private static void SendEmail(Contact contact)
         {
             try
@@ -72,3 +79,7 @@ namespace contactly_cli.UI
         }
     }
 }
+
+
+
+

@@ -1,17 +1,23 @@
-﻿using System;
+﻿/*  Projektname: contactly-cli
+ *  Erstellt: 2023-12-16
+ * 
+ *  Autor(en): Benjamin Kollmer
+ *  
+ *  Beschreibung der Funktionen dieser Datei:
+ *  - Definition der MenuOption-Klasse zur Darstellung von Menüoptionen
+ *  - Implementierung der AppControlMenu-Klasse zur Anzeige und Verwaltung des Anwendungsmenüs
+ *  - Erweiterungsmethode zur Zeichenfolienformatierung in der StringExtensions-Klasse
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace contactly_cli.Functions
 {
     public class MenuOption
     {
-        private ConsoleKey x;
-        private object v1;
-        private string v2;
-
         public ConsoleKey Key { get; }
         public Action Action { get; }
         public string Description { get; }
@@ -21,13 +27,6 @@ namespace contactly_cli.Functions
             Key = key;
             Action = action;
             Description = description;
-        }
-
-        public MenuOption(ConsoleKey x, object v1, string v2)
-        {
-            this.x = x;
-            this.v1 = v1;
-            this.v2 = v2;
         }
     }
 
@@ -58,6 +57,8 @@ namespace contactly_cli.Functions
             }
         }
 
+        // Die Methode RenderMenu wird verwendet, um das Anwendungsmenü auf der Konsole anzuzeigen.
+        // Sie akzeptiert eine Liste von Menüoptionen und rendert diese entsprechend auf der Konsole.
         private static void RenderMenu(List<MenuOption> options)
         {
             int consoleWidth, menuWidth;
@@ -94,25 +95,14 @@ namespace contactly_cli.Functions
             Console.WriteLine(menuLine.ToString());
         }
 
-        private static void HandleMenuInput(List<MenuOption> options)
-        {
-            ConsoleKeyInfo keyPress;
-
-            keyPress = Console.ReadKey(true);
-            foreach (var option in options)
-            {
-                if (option.Key == keyPress.Key)
-                {
-                    Console.Clear();
-                    option.Action();
-                    break;
-                }
-            }
-        }
     }
 
+    // Diese statische Klasse enthält eine Erweiterungsmethode für Zeichenfolien, um sie zu formatieren.
     public static class StringExtensions
     {
+        // Die Methode PadBoth fügt Leerzeichen zu einer Zeichenfolie hinzu, um sie auf die angegebene Länge zu zentrieren.
+        // Sie berechnet die Anzahl der Leerzeichen, die links und rechts hinzugefügt werden müssen, um das gewünschte Längenlimit zu erreichen.
+        // Diese Methode ist nützlich, um Menüoptionen im Anwendungsmenü gleichmäßig zu verteilen.
         public static string PadBoth(this string str, int length)
         {
             int spaces, padLeft;
@@ -122,5 +112,4 @@ namespace contactly_cli.Functions
             return str.PadLeft(padLeft).PadRight(length);
         }
     }
-
 }

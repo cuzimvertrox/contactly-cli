@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace contactly_cli.Functions
 {
@@ -48,7 +49,7 @@ namespace contactly_cli.Functions
                 contacts.Add(contact);
             }
 
-            return contacts;
+            return contacts.OrderBy(c => c.LastName).ThenBy(c => c.FirstName).ToList();
         }
 
         private static Contact ParseVCF(string filePath)
@@ -155,6 +156,47 @@ namespace contactly_cli.Functions
             SaveContact(contact);
         }
 
-        // Weitere Methoden wie UpdateContact und DeleteContact können hier hinzugefügt werden
+        public static void DeleteContact(string contactFileName)
+        {
+            string path = ConfigController.ReadConfig("path");
+
+            if (!ConfigController.IsValidPath(path))
+            {
+                Console.WriteLine("The path for contacts is not valid or not set.");
+                return;
+            }
+
+            string filePath = Path.Combine(path, contactFileName);
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+            else
+            {
+                Console.WriteLine("Contact file not found.");
+            }
+        }
+
+        public static void UpdateContact(Contact contact)
+        {
+            string path = ConfigController.ReadConfig("path");
+
+            if (!ConfigController.IsValidPath(path))
+            {
+                Console.WriteLine("The path for contacts is not valid or not set.");
+                return;
+            }
+
+            string contactFilePath = Path.Combine(path, contact.FileName);
+            if (!File.Exists(contactFilePath))
+            {
+                Console.WriteLine("Contact file not found.");
+                return;
+            }
+
+            string vcfContent = FormatContactAsVCF(contact);
+            File.WriteAllText(contactFilePath, vcfContent);
+            Console.WriteLine($"Contact '{contact.FirstName} {contact.LastName}' updated.");
+        }
     }
 }

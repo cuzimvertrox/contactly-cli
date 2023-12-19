@@ -45,7 +45,6 @@ namespace contactly_cli.Functions
         }
 
         // Schreibt einen Wert in die Konfigurationsdatei
-        // Schreibt einen Wert in die Konfigurationsdatei
         public static void WriteConfig(string key, string value)
         {
             // Überprüfen, ob die Datei existiert. Wenn nicht, erstelle sie.

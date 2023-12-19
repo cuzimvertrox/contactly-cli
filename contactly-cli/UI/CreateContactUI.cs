@@ -23,13 +23,13 @@ namespace contactly_cli.UI
             var contact = new Contact();
             RenderContactScreen(contact);
 
-            contact.FirstName = GetInputFromUser("Vorname", ref contact);
-            contact.LastName = GetInputFromUser("Nachname", ref contact);
-            contact.Company = GetInputFromUser("Firma", ref contact);
-            contact.Email = GetInputFromUser("E-Mail", ref contact);
-            contact.Phone = GetInputFromUser("Telefon", ref contact);
-            contact.Address = GetInputFromUser("Adresse", ref contact);
-            contact.Birthday = GetInputFromUser("Geburtstag", ref contact);
+            contact.FirstName = GetInputFromUser("Vorname ", ref contact);
+            contact.LastName = GetInputFromUser("Nachname ", ref contact);
+            contact.Company = GetInputFromUser("Firma ", ref contact);
+            contact.Email = GetInputFromUser("E-Mail (ex. name@mail.tld)", ref contact);
+            contact.Phone = GetInputFromUser("Telefon (ex. 072354628553)", ref contact);
+            contact.Address = GetInputFromUser("Adresse ", ref contact);
+            contact.Birthday = GetInputFromUser("Geburtstag (ex. 16.03.2001)", ref contact);
 
             RenderContactScreen(contact);
 
@@ -58,18 +58,20 @@ namespace contactly_cli.UI
         {
             string input;
             bool isValidInput;
+
+
             Func<string, bool> validation = null;
 
             switch (fieldName)
             {
                 case "E-Mail":
-                    validation = IsValidEmail;
+                    validation = InputValidationController.IsValidEmail;
                     break;
                 case "Telefon":
-                    validation = IsValidPhoneNumber;
+                    validation = InputValidationController.IsValidPhoneNumber;
                     break;
                 case "Geburtstag":
-                    validation = IsValidBirthday;
+                    validation = InputValidationController.IsValidBirthday;
                     break;
             }
 
@@ -79,14 +81,14 @@ namespace contactly_cli.UI
                 Console.SetCursorPosition(0, Console.WindowHeight - 4);
                 Console.Write($"Bitte gib {fieldName} ein: ");
                 Console.SetCursorPosition(0, Console.WindowHeight - 1);
-                input = AppInputController.ShowInputField<string>();
+                input = AppInputMenuController.ShowInputField<string>();
 
                 isValidInput = validation == null || validation(input);
                 if (!isValidInput)
                 {
                     Console.SetCursorPosition(0, Console.WindowHeight - 5);
                     Console.WriteLine($"\tUngültige Eingabe für {fieldName}. Bitte erneut versuchen.");
-                    Console.ReadKey(); // Warte auf Benutzereingabe, um die Nachricht zu bestätigen
+                    Console.ReadKey();
                 }
             } while (!isValidInput);
 
@@ -133,20 +135,6 @@ namespace contactly_cli.UI
 
         }
 
-        private static bool IsValidEmail(string email)
-        {
-            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-        }
-
-        private static bool IsValidPhoneNumber(string phone)
-        {
-            return Regex.IsMatch(phone, @"^\d{4,}$");
-        }
-
-        private static bool IsValidBirthday(string birthday)
-        {
-            return Regex.IsMatch(birthday, @"^\d{2}\.\d{2}\.\d{4}$");
-        }
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using contactly_cli.Functions;
 
 namespace contactly_cli.UI
@@ -29,7 +30,7 @@ namespace contactly_cli.UI
             Console.WriteLine($"\tTelefon: {contact.Phone}");
             Console.WriteLine($"\tAdresse: {contact.Address}");
             Console.WriteLine($"\tGeburtstag: {contact.Birthday}\n");
-            ShowReturnToHomeMenu();
+            ShowOptions(contact);
         }
 
         private static void PrintLines(List<string> lines)
@@ -40,14 +41,34 @@ namespace contactly_cli.UI
             }
         }
 
-        private static void ShowReturnToHomeMenu()
+        private static void ShowOptions(Contact contact)
         {
             List<MenuOption> options = new List<MenuOption>
             {
+                new MenuOption(ConsoleKey.E, () => EditContactUI.ShowEditContactScreen(contact), "Kontakt bearbeiten"),
+                new MenuOption(ConsoleKey.D, () => DeleteContactUI.ShowDeleteContactScreen(contact), "Kontakt löschen"),
+                new MenuOption(ConsoleKey.M, () => SendEmail(contact), "E-Mail an Kontakt"),
                 new MenuOption(ConsoleKey.X, HomeUI.ShowHomeScreen, "Zurück zum Hauptmenü")
+
+
             };
 
             AppControlMenu.ShowMenu(options);
+
+        }
+
+        private static void SendEmail(Contact contact)
+        {
+            try
+            {
+                Process.Start($"mailto:{contact.Email}");
+                Console.Clear();
+                HomeUI.ShowHomeScreen();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Fehler beim Öffnen des E-Mail-Clients: " + ex.Message);
+            }
         }
     }
 }

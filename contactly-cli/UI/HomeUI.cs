@@ -48,7 +48,7 @@ namespace contactly_cli.UI
             PrintLines(logoLines);
             PrintLines(welcomeMessage);
             PrintLines(menuOptions);
-            ShowPathWarning();
+            PrintLines(pathWarning);
             PrintDeveloperInfoAtBottom();
             ShowMainMenu();
         }
@@ -59,15 +59,6 @@ namespace contactly_cli.UI
             {
                 Console.WriteLine(line);
             }
-        }
-
-        private static void ShowPathWarning()
-        {
-            // Hier können Sie die Logik einfügen, um zu überprüfen, ob der Pfad gesetzt ist.
-            // Zum Beispiel: if (Settings.ContactPathIsSet) { ... } else { ... }
-            // Für den Moment verwenden wir einen Platzhalter-Text.
-
-            PrintLines(pathWarning);
         }
 
         private static void PrintDeveloperInfoAtBottom()
@@ -101,7 +92,6 @@ namespace contactly_cli.UI
         // Methode um die Anwendung zu schließen
         private static void ExitApplication()
         {
-            Console.WriteLine("Anwendung wird beendet...");
             Environment.Exit(0);
         }
     }

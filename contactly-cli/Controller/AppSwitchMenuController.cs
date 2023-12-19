@@ -8,6 +8,10 @@ namespace contactly_cli.Functions
 {
     public class MenuOption
     {
+        private ConsoleKey x;
+        private object v1;
+        private string v2;
+
         public ConsoleKey Key { get; }
         public Action Action { get; }
         public string Description { get; }
@@ -17,6 +21,13 @@ namespace contactly_cli.Functions
             Key = key;
             Action = action;
             Description = description;
+        }
+
+        public MenuOption(ConsoleKey x, object v1, string v2)
+        {
+            this.x = x;
+            this.v1 = v1;
+            this.v2 = v2;
         }
     }
 

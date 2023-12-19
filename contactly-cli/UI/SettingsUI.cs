@@ -68,7 +68,7 @@ namespace contactly_cli.UI
                 Console.WriteLine("");
                 Console.Write("   Eingabe des neuen Pfads zum Kontaktbuch: ");
 
-                string newPath = AppInputController.ShowInputField<string>(); // Benutzereingabe für den neuen Pfad abrufen
+                string newPath = AppInputMenuController.ShowInputField<string>(); // Benutzereingabe für den neuen Pfad abrufen
 
                 // Überprüfen, ob der eingegebene Pfad gültig ist
                 if (ConfigController.IsValidPath(newPath))

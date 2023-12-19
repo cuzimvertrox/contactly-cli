@@ -3,7 +3,7 @@ using System.Text;
 
 namespace contactly_cli.Functions
 {
-    public class AppInputController
+    public class AppInputMenuController
     {
         public static T ShowInputField<T>()
         {

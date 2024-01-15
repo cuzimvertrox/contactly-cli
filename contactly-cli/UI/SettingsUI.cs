@@ -19,6 +19,7 @@ namespace contactly_cli.UI
     {
         private static readonly List<string> settingsLogoLines = new List<string> {
             // Logo für Einstellungsmenü
+            "",
             " _____ _           _       _ _                              ",
             "|  ___(_)         | |     | | |                             ",
             "| |__  _ _ __  ___| |_ ___| | |_   _ _ __   __ _  ___ _ __  ",
@@ -51,6 +52,21 @@ namespace contactly_cli.UI
             AppControlMenu.ShowMenu(settingsOptions);
         }
 
+        public static void ShowConfigScreen()
+        {
+            Console.Clear();
+            PrintLinesController.PrintLines(settingsLogoLines);
+            PrintLinesController.PrintLines(settingsMessage);
+            ShowConfiguredPath();
+
+            List<MenuOption> settingsOptions = new List<MenuOption> {
+                new MenuOption(ConsoleKey.P, SetContactBookPath, "Pfad zum Kontaktbuch setzen"),
+                new MenuOption(ConsoleKey.X, HomeUI.ShowHomeScreen, "Zurück zum Hauptmenü")
+            };
+
+            AppControlMenu.ShowMenu(settingsOptions);
+        }
+
         // Methode zum Anzeigen des konfigurierten Pfads
         public static void ShowConfiguredPath()
         {
@@ -62,6 +78,10 @@ namespace contactly_cli.UI
         private static void SetContactBookPath()
         {
             bool validPathEntered = false;
+
+            List<MenuOption> settingsOptions = new List<MenuOption> {
+                new MenuOption(ConsoleKey.X, HomeUI.ShowHomeScreen, "Zurück zum Hauptmenü")
+            };
 
             while (!validPathEntered)
             {
@@ -77,12 +97,15 @@ namespace contactly_cli.UI
                     Console.Clear();
                     PrintLinesController.PrintLines(settingsLogoLines);
                     Console.WriteLine("   Neuer Pfad gespeichert.");
-                    Console.ReadKey();
+                    ShowConfiguredPath();
+                    AppControlMenu.ShowMenu(settingsOptions);
 
-                    Console.Clear();
+
+                   /* Console.Clear();
                     PrintLinesController.PrintLines(settingsLogoLines);
                     PrintLinesController.PrintLines(settingsMessage);
                     ShowConfiguredPath();
+                   */
                 }
                 else
                 {

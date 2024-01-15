@@ -101,11 +101,11 @@ namespace contactly_cli.UI
                     AppControlMenu.ShowMenu(settingsOptions);
 
 
-                   /* Console.Clear();
-                    PrintLinesController.PrintLines(settingsLogoLines);
-                    PrintLinesController.PrintLines(settingsMessage);
-                    ShowConfiguredPath();
-                   */
+                    /* Console.Clear();
+                     PrintLinesController.PrintLines(settingsLogoLines);
+                     PrintLinesController.PrintLines(settingsMessage);
+                     ShowConfiguredPath();
+                    */
                 }
                 else
                 {
